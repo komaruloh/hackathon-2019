@@ -68,8 +68,16 @@ const UserDetail = () => {
         </Box>
         <Icon size={4} path={mdiAccountCircle} />
         <Typography variant="h6">XXXXXXXX</Typography>
-        <Typography variant="body">Risk score: 79/100</Typography>
-        <Typography variant="body">BAD</Typography>
+        <Typography variant="body1">Risk score: 79/100</Typography>
+        <Box
+          color="red"
+          border={1}
+          width={1 / 4}
+          display="flex"
+          justifyContent="center"
+        >
+          <Typography variant="body1">BAD</Typography>
+        </Box>
         <Table stickyHeader>
           <TableHead>
             <TableRow>
