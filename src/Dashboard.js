@@ -11,7 +11,7 @@ import { mdiAccountCircle } from "@mdi/js";
 const User = () => {
   return (
     <Box m={2}>
-      <Button fullWidth variant="outlined" component={Link} to={"/detail"}>
+      <Button fullWidth variant="outlined" component={Link} to="/detail">
         XXXXXXX
       </Button>
     </Box>

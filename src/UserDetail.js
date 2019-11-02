@@ -62,9 +62,9 @@ const UserDetail = () => {
         flexDirection="column"
       >
         <Box m={1} display="flex" alignSelf="flex-start">
-          <Link to="/">
-            <Button variant="outlined">Back</Button>
-          </Link>
+          <Button variant="outlined" component={Link} to="/">
+            Back
+          </Button>
         </Box>
         <Icon size={4} path={mdiAccountCircle} />
         <Typography variant="h6">XXXXXXXX</Typography>
