@@ -1,21 +1,37 @@
 import React from "react";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
+
+const User = () => {
+  return (
+    <Box border={1} m={2}>
+      XXXXXXX
+    </Box>
+  );
+};
+
+const List = ({ title }) => {
+  return (
+    <Grid item xs={4}>
+      <Box border={1} m={2}>
+        <div>{title}</div>
+        <User />
+      </Box>
+    </Grid>
+  );
+};
 
 const Dashboard = () => {
   return (
     <Container maxWidth="lg">
-      <Grid container spacing={3}>
-        <Grid item xs={4}>
-          <div>Good</div>
+      <Box border={1} m={2}>
+        <Grid container spacing={3}>
+          <List title="Good" />
+          <List title="Suspicious" />
+          <List title="Bad" />
         </Grid>
-        <Grid item xs={4}>
-          <div>Suspicious</div>
-        </Grid>
-        <Grid item xs={4}>
-          <div>Bad</div>
-        </Grid>
-      </Grid>
+      </Box>
     </Container>
   );
 };
