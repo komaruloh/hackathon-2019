@@ -11,23 +11,24 @@ import Icon from "@mdi/react";
 import { mdiAccountCircle } from "@mdi/js";
 import * as R from "ramda";
 import { useStoreActions } from "easy-peasy";
+import { useRouteMatch } from "react-router-dom";
 
 const PillSwitcher = () => {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
+  let isLive = useRouteMatch("/dashboard/live");
   return (
     <Tabs
-      value={value}
-      onChange={handleChange}
+      value={isLive ? "live" : "history"}
       indicatorColor="primary"
       textColor="primary"
       aria-label="disabled tabs example"
     >
-      <Tab label="Live" component={Link} to="/dashboard/live" />
-      <Tab label="History" component={Link} to="/dashboard/history" />
+      <Tab label="Live" value="live" component={Link} to="/dashboard/live" />
+      <Tab
+        label="History"
+        value="history"
+        component={Link}
+        to="/dashboard/history"
+      />
     </Tabs>
   );
 };
@@ -48,7 +49,7 @@ const User = ({ username, newUser = false }) => {
                   type: "suspicious",
                   username: "YYYYYY"
                 })
-            : ""
+            : () => {}
         }
       >
         {username}
