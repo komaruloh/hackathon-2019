@@ -38,6 +38,7 @@ const Column = ({ id }) => {
             border={1}
             p={1}
             m={1}
+            width={100}
           >
             {usersByColumn.map((id, index) => (
               <User key={id} id={id} value={users[id].username} index={index} />
