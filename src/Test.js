@@ -2,7 +2,7 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
-import { useStoreState } from "easy-peasy";
+import { useStoreState, useStoreActions } from "easy-peasy";
 
 const User = ({ id, value, index }) => {
   return (
@@ -23,6 +23,9 @@ const User = ({ id, value, index }) => {
 };
 
 const Column = ({ id }) => {
+  const users = useStoreState(state => state.dnd.data.users);
+  const columns = useStoreState(state => state.dnd.data.columns);
+  const usersByColumn = columns[id].userIds;
   return (
     <Droppable droppableId={id} type="USER">
       {provided => {
@@ -36,8 +39,9 @@ const Column = ({ id }) => {
             p={1}
             m={1}
           >
-            <User id="draggable-1" value="User1" index={0} />
-            <User id="draggable-2" value="User2" index={1} />
+            {usersByColumn.map((id, index) => (
+              <User key={id} id={id} value={users[id].username} index={index} />
+            ))}
             {provided.placeholder}
           </Box>
         );
@@ -47,10 +51,10 @@ const Column = ({ id }) => {
 };
 
 const Test = () => {
-  const dndState = useStoreState(state => state.dnd.data);
   const columnIds = useStoreState(state => state.dnd.columnIds);
+  const { saveDnd, removeUser } = useStoreActions(actions => actions.dnd);
   const onDragEnd = React.useCallback(result => {
-    const { destination, source, draggableId } = result;
+    const { destination, source } = result;
     if (!destination) return;
     if (
       destination.droppableId === source.droppableId &&
@@ -58,6 +62,19 @@ const Test = () => {
     ) {
       return;
     }
+
+    const isSameColumn = source.droppableId === destination.droppableId;
+    if (isSameColumn) {
+      saveDnd({
+        originalIndex: source.index,
+        newIndex: destination.index
+      });
+      return;
+    }
+
+    removeUser({
+      originalIndex: source.index
+    });
   }, []);
   return (
     <Container maxWidth="lg">

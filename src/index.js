@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { StoreProvider, createStore, action, computed } from "easy-peasy";
+import * as R from "ramda";
 
 const userModel = {
   data: [
@@ -48,12 +49,16 @@ const dndModel = {
       "user-2": {
         id: "user-2",
         username: "ZZZZZZZ2"
+      },
+      "user-3": {
+        id: "user-3",
+        username: "ZZZZZZZ3"
       }
     },
     columns: {
       userColumn: {
         id: "userColumn",
-        userIds: ["user-1", "user-2"]
+        userIds: ["user-1", "user-2", "user-3"]
       },
       testColumn: {
         id: "testColumn",
@@ -61,7 +66,19 @@ const dndModel = {
       }
     }
   },
-  columnIds: computed(state => Object.keys(state.data.columns))
+  columnIds: computed(state => Object.keys(state.data.columns)),
+  saveDnd: action((state, payload) => {
+    const newOrder = R.move(payload.originalIndex, payload.newIndex)(
+      state.data.columns.userColumn.userIds
+    );
+    state.data.columns.userColumn.userIds = newOrder;
+  }),
+  removeUser: action((state, payload) => {
+    const newOrder = R.remove(payload.originalIndex, 1)(
+      state.data.columns.userColumn.userIds
+    );
+    state.data.columns.userColumn.userIds = newOrder;
+  })
 };
 
 const storeModel = {
