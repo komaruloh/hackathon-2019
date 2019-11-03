@@ -58,7 +58,7 @@ const User = ({ username, newUser = false }) => {
   );
 };
 
-const List = ({ title, color, users, newUser = false }) => {
+const List = ({ title, color, users, newUser }) => {
   return (
     <Grid item xs={4}>
       <Box border={1} m={2}>
