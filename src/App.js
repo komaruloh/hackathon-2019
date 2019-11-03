@@ -39,7 +39,7 @@ function App() {
         <Route exact path="/">
           <Dashboard />
         </Route>
-        <Route path="/dashboard/live">
+        <Route exact path={["/dashboard/live", "/"]}>
           <Dashboard />
         </Route>
         <Route path="/dashboard/history">
