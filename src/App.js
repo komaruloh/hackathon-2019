@@ -5,6 +5,10 @@ import UserDetail from "./UserDetail";
 import Test from "./Test";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useStoreState } from "easy-peasy";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Box from "@material-ui/core/Box";
+import LinkMui from "@material-ui/core/Link";
 
 const newUsers = [
   {
@@ -17,22 +21,28 @@ const newUsers = [
   }
 ];
 
-const Menu = () => {};
+const Menu = () => {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Box display="flex" width={1 / 10} justifyContent="space-around">
+          <LinkMui color="inherit" component={Link} to="/test">
+            Test
+          </LinkMui>
+          <LinkMui color="inherit" component={Link} to="/dashboard/live">
+            Dashboard
+          </LinkMui>
+        </Box>
+      </Toolbar>
+    </AppBar>
+  );
+};
 
 function App() {
   const users = useStoreState(state => state.users.data);
   return (
     <Router>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/dashboard/live">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/test">Test</Link>
-          </li>
-        </ul>
-      </nav>
+      <Menu />
       <Switch>
         <Route exact path="/">
           <Dashboard />
