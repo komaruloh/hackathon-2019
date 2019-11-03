@@ -1,8 +1,8 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Dashboard from "./Dashboard";
 import UserDetail from "./UserDetail";
+import Test from "./Test";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useStoreState } from "easy-peasy";
 
@@ -17,10 +17,22 @@ const newUsers = [
   }
 ];
 
+const Menu = () => {};
+
 function App() {
   const users = useStoreState(state => state.users.data);
   return (
     <Router>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/dashboard/live">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/test">Test</Link>
+          </li>
+        </ul>
+      </nav>
       <Switch>
         <Route exact path="/">
           <Dashboard />
@@ -33,6 +45,9 @@ function App() {
         </Route>
         <Route path="/detail">
           <UserDetail />
+        </Route>
+        <Route path="/test">
+          <Test />
         </Route>
       </Switch>
     </Router>
