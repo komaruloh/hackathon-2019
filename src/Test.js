@@ -2,6 +2,7 @@ import React from "react";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useStoreState } from "easy-peasy";
 
 const User = ({ id, value, index }) => {
   return (
@@ -21,9 +22,9 @@ const User = ({ id, value, index }) => {
   );
 };
 
-const Column = () => {
+const Column = ({ id }) => {
   return (
-    <Droppable droppableId="droppable-1" type="USER">
+    <Droppable droppableId={id} type="USER">
       {provided => {
         return (
           <Box
@@ -31,6 +32,9 @@ const Column = () => {
             display="flex"
             {...provided.droppableProps}
             flexDirection="column"
+            border={1}
+            p={1}
+            m={1}
           >
             <User id="draggable-1" value="User1" index={0} />
             <User id="draggable-2" value="User2" index={1} />
@@ -43,6 +47,8 @@ const Column = () => {
 };
 
 const Test = () => {
+  const dndState = useStoreState(state => state.dnd.data);
+  const columnIds = useStoreState(state => state.dnd.columnIds);
   const onDragEnd = React.useCallback(result => {
     const { destination, source, draggableId } = result;
     if (!destination) return;
@@ -52,14 +58,16 @@ const Test = () => {
     ) {
       return;
     }
-    // the only one that is required
-    console.log("in here1");
   }, []);
   return (
     <Container maxWidth="lg">
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Column />
-      </DragDropContext>
+      <Box display="flex" justifyContent="center">
+        <DragDropContext onDragEnd={onDragEnd}>
+          {columnIds.map(id => (
+            <Column key={id} id={id} />
+          ))}
+        </DragDropContext>
+      </Box>
     </Container>
   );
 };
