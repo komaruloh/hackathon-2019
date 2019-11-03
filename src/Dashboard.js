@@ -11,33 +11,6 @@ import Icon from "@mdi/react";
 import { mdiAccountCircle } from "@mdi/js";
 import * as R from "ramda";
 
-const users = [
-  {
-    type: "good",
-    users: [
-      {
-        username: "XXXXXXX1"
-      }
-    ]
-  },
-  {
-    type: "suspicious",
-    users: [
-      {
-        username: "XXXXXXX2"
-      }
-    ]
-  },
-  {
-    type: "bad",
-    users: [
-      {
-        username: "XXXXXXX3"
-      }
-    ]
-  }
-];
-
 const PillSwitcher = () => {
   const [value, setValue] = React.useState(0);
 
