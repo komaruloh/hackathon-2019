@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import Icon from "@mdi/react";
 import { mdiAccountCircle } from "@mdi/js";
 import * as R from "ramda";
+import { useStoreActions } from "easy-peasy";
 
 const PillSwitcher = () => {
   const [value, setValue] = React.useState(0);
@@ -31,17 +32,32 @@ const PillSwitcher = () => {
   );
 };
 
-const User = ({ username }) => {
+const User = ({ username, newUser = false }) => {
+  const saveUser = useStoreActions(actions => actions.users.saveUser);
   return (
     <Box m={2}>
-      <Button fullWidth variant="outlined" component={Link} to="/detail">
+      <Button
+        fullWidth
+        variant="outlined"
+        component={Link}
+        to="/detail"
+        onClick={
+          newUser
+            ? () =>
+                saveUser({
+                  type: "suspicious",
+                  username: "YYYYYY"
+                })
+            : ""
+        }
+      >
         {username}
       </Button>
     </Box>
   );
 };
 
-const List = ({ title, color, users }) => {
+const List = ({ title, color, users, newUser = false }) => {
   return (
     <Grid item xs={4}>
       <Box border={1} m={2}>
@@ -53,14 +69,14 @@ const List = ({ title, color, users }) => {
         </Box>
         {users &&
           users.map(({ username }) => {
-            return <User username={username} />;
+            return <User username={username} newUser={newUser} />;
           })}
       </Box>
     </Grid>
   );
 };
 
-const Dashboard = ({ users = [] }) => {
+const Dashboard = ({ users = [], ...restProps }) => {
   const getUsers = R.curry(type =>
     R.pipe(
       R.find(R.propEq("type", type)),
@@ -79,9 +95,14 @@ const Dashboard = ({ users = [] }) => {
       </Box>
       <Box border={1} m={2}>
         <Grid container spacing={3}>
-          <List title="Good" color="green" users={goodUsers} />
-          <List title="Suspicious" color="yellow" users={suspiciousUsers} />
-          <List title="Bad" color="red" users={badUsers} />
+          <List title="Good" color="green" users={goodUsers} {...restProps} />
+          <List
+            title="Suspicious"
+            color="yellow"
+            users={suspiciousUsers}
+            {...restProps}
+          />
+          <List title="Bad" color="red" users={badUsers} {...restProps} />
         </Grid>
       </Box>
     </Container>

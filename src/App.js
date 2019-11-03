@@ -25,8 +25,8 @@ function App() {
         <Route exact path="/">
           <Dashboard />
         </Route>
-        <Route exact path={["/dashboard/live", "/"]}>
-          <Dashboard users={newUsers} />
+        <Route path="/dashboard/live">
+          <Dashboard newUser users={newUsers} />
         </Route>
         <Route path="/dashboard/history">
           <Dashboard users={users} />

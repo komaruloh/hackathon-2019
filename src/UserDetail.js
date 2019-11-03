@@ -11,7 +11,6 @@ import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import Icon from "@mdi/react";
 import { mdiAccountCircle } from "@mdi/js";
-import { useStoreActions } from "easy-peasy";
 
 const data = [
   {
@@ -53,7 +52,6 @@ const data = [
 ];
 
 const UserDetail = () => {
-  const saveUser = useStoreActions(actions => actions.users.saveUser);
   return (
     <Container maxWidth="sm">
       <Box
@@ -66,17 +64,6 @@ const UserDetail = () => {
         <Box m={1} display="flex" alignSelf="flex-start">
           <Button variant="outlined" component={Link} to="/">
             Back
-          </Button>
-          <Button
-            variant="outlined"
-            onClick={() =>
-              saveUser({
-                type: "suspicious",
-                username: "YYYYYY"
-              })
-            }
-          >
-            Save
           </Button>
         </Box>
         <Icon size={4} path={mdiAccountCircle} />
