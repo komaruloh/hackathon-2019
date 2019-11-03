@@ -11,6 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
 import Icon from "@mdi/react";
 import { mdiAccountCircle } from "@mdi/js";
+import { useHistory } from "react-router-dom";
 
 const data = [
   {
@@ -51,7 +52,8 @@ const data = [
   }
 ];
 
-const UserDetail = () => {
+const UserDetail = props => {
+  let history = useHistory();
   return (
     <Container maxWidth="sm">
       <Box
@@ -62,7 +64,7 @@ const UserDetail = () => {
         flexDirection="column"
       >
         <Box m={1} display="flex" alignSelf="flex-start">
-          <Button variant="outlined" component={Link} to="/">
+          <Button variant="outlined" onClick={() => history.goBack()}>
             Back
           </Button>
         </Box>
