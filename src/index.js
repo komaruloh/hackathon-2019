@@ -1,10 +1,54 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
+import { StoreProvider, createStore, action } from "easy-peasy";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const storeModel = {
+  users: {
+    data: [
+      {
+        type: "good",
+        users: [
+          {
+            username: "XXXXXXX1"
+          }
+        ]
+      },
+      {
+        type: "suspicious",
+        users: [
+          {
+            username: "XXXXXXX2"
+          }
+        ]
+      },
+      {
+        type: "bad",
+        users: [
+          {
+            username: "XXXXXXX3"
+          }
+        ]
+      }
+    ],
+    saveUser: action((state, payload) => {
+      console.log("TCL: state.data", state.data);
+      state.data[0].users.push(payload);
+      console.log("TCL: payload", payload);
+    })
+  }
+};
+
+const store = createStore(storeModel);
+
+ReactDOM.render(
+  <StoreProvider store={store}>
+    <App />
+  </StoreProvider>,
+  document.getElementById("root")
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
