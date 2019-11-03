@@ -5,40 +5,41 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { StoreProvider, createStore, action } from "easy-peasy";
 
+const userModel = {
+  data: [
+    {
+      type: "good",
+      users: [
+        {
+          username: "XXXXXXX1"
+        }
+      ]
+    },
+    {
+      type: "suspicious",
+      users: [
+        {
+          username: "XXXXXXX2"
+        }
+      ]
+    },
+    {
+      type: "bad",
+      users: [
+        {
+          username: "XXXXXXX3"
+        }
+      ]
+    }
+  ],
+  saveUser: action((state, payload) => {
+    const index = state.data.findIndex(({ type }) => type === payload.type);
+    state.data[index].users.push(payload);
+  })
+};
+
 const storeModel = {
-  users: {
-    data: [
-      {
-        type: "good",
-        users: [
-          {
-            username: "XXXXXXX1"
-          }
-        ]
-      },
-      {
-        type: "suspicious",
-        users: [
-          {
-            username: "XXXXXXX2"
-          }
-        ]
-      },
-      {
-        type: "bad",
-        users: [
-          {
-            username: "XXXXXXX3"
-          }
-        ]
-      }
-    ],
-    saveUser: action((state, payload) => {
-      console.log("TCL: state.data", state.data);
-      state.data[0].users.push(payload);
-      console.log("TCL: payload", payload);
-    })
-  }
+  users: userModel
 };
 
 const store = createStore(storeModel);

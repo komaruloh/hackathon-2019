@@ -71,6 +71,7 @@ const UserDetail = () => {
             variant="outlined"
             onClick={() =>
               saveUser({
+                type: "suspicious",
                 username: "YYYYYY"
               })
             }
